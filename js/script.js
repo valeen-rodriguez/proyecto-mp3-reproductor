@@ -9,20 +9,20 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             "id": 1,
             "name": "Lovers Rock - TV Girl",
-            "image": "/image/lovers-rock-img.png",
-            "audio": "/audio/lovers-rock-audio.mp3"
+            "image": "image/lovers-rock-img.png",
+            "audio": "audio/lovers-rock-audio.mp3"
         },
         {
             "id": 2,
             "name": "Something about you - Eyedress",
-            "image": "/image/something-about-you-img.jpg",
-            "audio": "/audio/something-about-you.mp3"
+            "image": "image/something-about-you-img.jpg",
+            "audio": "audio/something-about-you.mp3"
         },
         {
             "id": 3,
             "name": "Can I call you tonight? - Dayglow",
-            "image": "/image/call-you-tonight-img.png",
-            "audio": "/audio/call-you-tonight.mp3"
+            "image": "image/call-you-tonight-img.png",
+            "audio": "audio/call-you-tonight.mp3"
         },
         {
             "id": 4,
@@ -33,14 +33,14 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             "id": 5,
             "name": "Mr loverman - Ricky Montgomery",
-            "image": "/image/mrs-loverman-img.png",
-            "audio": "/audio/mr-loverman.mp3"
+            "image": "image/mrs-loverman-img.png",
+            "audio": "audio/mr-loverman.mp3"
         },
         {
             "id": 6,
             "name": "Tek it - Cafuné",
-            "image": "/image/tek-it-img.jpg",
-            "audio": "/audio/tek-it.mp3"
+            "image": "image/tek-it-img.jpg",
+            "audio": "audio/tek-it.mp3"
         }
     ];
 
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
             songImage.src = currentSong.image;
         } else {
             // si no hay nada, mostrar img de "seleccionar canción"
-            songImage.src = "/image/portada-mp3.png";
+            songImage.src = "image/portada-mp3.png";
         }
     }
 
