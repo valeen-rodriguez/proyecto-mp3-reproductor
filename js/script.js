@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "id": 4,
             "name": "I wanna be yours - Arctic Monkeys",
             "image": "image/wanna-be-yours-img.png",
-            "audio": "/audio/wanne-be-yours.mp3"
+            "audio": "audio/wanne-be-yours.mp3"
         },
         {
             "id": 5,
