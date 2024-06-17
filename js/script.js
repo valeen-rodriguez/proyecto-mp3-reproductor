@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
             musicPlayer.src = currentSong.audio;
             songImage.src = currentSong.image;
         } else {
-            // si no hay nada, mostrar img de "seleccionar canción"
+            // si no hay nada mostrar img de "seleccionar canción"
             songImage.src = "image/portada-mp3.png";
         }
     }
