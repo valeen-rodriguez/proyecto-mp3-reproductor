@@ -1,11 +1,6 @@
-document.getElementById('toggle-button').addEventListener('click', function() {
-    var songListContainer = document.getElementById('song-list-container');
-    songListContainer.classList.toggle('active');
-});
-
 document.addEventListener("DOMContentLoaded", function() {
-    // JSON canciones
     const songs = [
+        // JSON canciones
         {
             "id": 1,
             "name": "Lovers Rock - TV Girl",
@@ -44,116 +39,200 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     ];
 
-    const songList = document.getElementById("song-list");
     const musicPlayer = document.getElementById("music-player");
     const songImage = document.getElementById("song-image");
+    const songTitle = document.getElementById("song-title");
+    const welcomeText = document.getElementById("welcome-text");
+    const nameInputContainer = document.getElementById("name-input-container");
+    const screen = document.getElementById("screen");
+    const backButton = document.createElement("button");
+    backButton.textContent = "Volver Atrás";
+    backButton.id = "back-to-welcome";
+    backButton.style.display = "none";
+    screen.appendChild(backButton);
 
     let currentSongIndex = -1;
     let isPlaying = false;
-    let currentVolume = musicPlayer.volume;
+    let isSongDetailsView = false;
 
-    // actualizar la canción actual
+    document.getElementById("submit-name").addEventListener("click", function() {
+        const nameInput = document.getElementById("name-input");
+        const userName = nameInput.value.trim();
+        if (userName) {
+            welcomeText.textContent = `Hola, ${userName}!`;
+            nameInputContainer.style.display = "none";
+            showSongListButton();
+        }
+    });
+
+    function showSongListButton() {
+        const showListButton = document.createElement("button");
+        showListButton.textContent = "Ver Lista de Canciones";
+        showListButton.id = "show-song-list";
+        screen.appendChild(showListButton);
+
+        showListButton.addEventListener("click", function() {
+            showSongList();
+        });
+    }
+
+    function showSongList() {
+        isSongDetailsView = false; // vista de playlist
+        backButton.style.display = "block";
+        const songListContainer = document.createElement("div");
+        songListContainer.classList.add("song-list-container");
+
+        const songList = document.createElement("ul");
+        songList.classList.add("song-list");
+
+        songs.forEach(song => {
+            const listItem = document.createElement("li");
+            listItem.classList.add("song-item");
+            const link = document.createElement("a");
+            link.href = "#";
+            link.textContent = `${song.id}. ${song.name}`;
+            link.dataset.id = song.id;
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+                showSongDetails(song);
+            });
+            listItem.appendChild(link);
+            songList.appendChild(listItem);
+        });
+
+        songListContainer.appendChild(songList);
+        screen.style.backgroundImage = "";
+        screen.innerHTML = "";
+        screen.appendChild(songListContainer);
+    }
+
+    function showSongDetails(song) {
+        isSongDetailsView = true; // detalle de la cancion
+        const songDetails = document.createElement("div");
+        songDetails.classList.add("song-details");
+
+        const title = document.createElement("h3");
+        title.textContent = song.name;
+        songDetails.appendChild(title);
+
+        const image = document.createElement("img");
+        image.src = song.image;
+        image.alt = song.name;
+        songDetails.appendChild(image);
+
+        const backToListButton = document.createElement("button");
+        backToListButton.textContent = "Volver Atrás";
+        backToListButton.addEventListener("click", function() {
+            showSongList();
+        });
+        songDetails.appendChild(backToListButton);
+
+        screen.style.backgroundImage = `url(${song.image})`;
+        screen.style.backgroundSize = "cover";
+        screen.style.backgroundPosition = "center";
+
+        screen.innerHTML = "";
+        screen.appendChild(songDetails);
+
+        currentSongIndex = songs.findIndex(s => s.id === song.id);
+        updateCurrentSong();
+    }
+
+    backButton.addEventListener("click", function() {
+        showSongList();
+    });
+
     function updateCurrentSong() {
         if (currentSongIndex !== -1) {
             const currentSong = songs[currentSongIndex];
             musicPlayer.src = currentSong.audio;
-            songImage.src = currentSong.image;
-        } else {
-            // si no hay nada mostrar img de "seleccionar canción"
-            songImage.src = "image/portada-mp3.png";
-        }
-    }
-
-    // reproducir o pausar la canción y actualizar clases
-    function play() {
-        if (currentSongIndex !== -1) {
             if (isPlaying) {
-                musicPlayer.pause();
+                musicPlayer.play();
             } else {
-                musicPlayer.play();
+                musicPlayer.pause();
             }
-            isPlaying = !isPlaying;
-            
-            const controlPanelObj = document.querySelector('.controls');
-            const infoBarObj = document.querySelector('.screen');
-            
-            controlPanelObj.classList.toggle('active');
-            infoBarObj.classList.toggle('active');
+            songTitle.textContent = currentSong.name;
+
+            if (isSongDetailsView) {
+                songImage.src = currentSong.image; // actualiza la imagen (solo si estamos detalle de la cancion)
+            }
+
+            if (document.querySelector(".song-details")) {
+                const titleElement = document.querySelector(".song-details h3");
+                const imageElement = document.querySelector(".song-details img");
+
+                if (titleElement && imageElement) {
+                    titleElement.textContent = currentSong.name;
+                    imageElement.src = currentSong.image;
+                    imageElement.alt = currentSong.name;
+                }
+            }
+
+            // actualiza imagen de fondo
+            screen.style.backgroundImage = `url(${currentSong.image})`;
+            screen.style.backgroundSize = "cover";
+            screen.style.backgroundPosition = "center";
+        } else {
+            musicPlayer.pause();
+            songTitle.textContent = "";
         }
     }
 
-    // cambiar a la canción anterior
-    function playPreviousSong() {
+    document.getElementById("center").addEventListener("click", function() {
         if (currentSongIndex !== -1) {
-            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-            updateCurrentSong();
-            if (isPlaying) {
-                musicPlayer.play();
-            }
+            togglePlay();
         }
-    }
-
-    // cambiar a la siguiente canción
-    function playNextSong() {
-        if (currentSongIndex !== -1) {
-            currentSongIndex = (currentSongIndex + 1) % songs.length;
-            updateCurrentSong();
-            if (isPlaying) {
-                musicPlayer.play();
-            }
-        }
-    }
-
-    // subir el volumen
-    function increaseVolume() {
-        if (currentVolume < 1) {
-            currentVolume += 0.1;
-            musicPlayer.volume = currentVolume;
-        }
-    }
-
-    // Función para bajar el volumen
-    function decreaseVolume() {
-        if (currentVolume > 0) {
-            currentVolume -= 0.1;
-            musicPlayer.volume = currentVolume;
-        }
-    }
-
-    document.getElementById("prev").addEventListener("click", playPreviousSong);
-    document.getElementById("next").addEventListener("click", playNextSong);
-    document.getElementById("center").addEventListener("click", play);
-    document.getElementById("vol-up").addEventListener("click", increaseVolume);
-    document.getElementById("vol-down").addEventListener("click", decreaseVolume);
-
-    // reproducir la canción seleccionada
-    function playSong(event) {
-        event.preventDefault();
-        const songId = parseInt(event.target.dataset.id);
-        const selectedSong = songs.find(song => song.id === songId);
-
-        if (selectedSong) {
-            currentSongIndex = songs.findIndex(song => song.id === songId);
-            updateCurrentSong();
-
-            if (isPlaying) {
-                musicPlayer.play();
-            }
-        }
-    }
-
-    // crear lista de canciones
-    songs.forEach(song => {
-        const listItem = document.createElement("li");
-        listItem.classList.add("song-item");
-        const link = document.createElement("a");
-        link.href = "#";
-        link.textContent = `${song.id}. ${song.name}`;
-        link.dataset.id = song.id;
-        link.addEventListener("click", playSong);
-        listItem.appendChild(link);
-        songList.appendChild(listItem);
     });
+
+    document.getElementById("vol-up").addEventListener("click", function() {
+        changeVolume("up");
+    });
+
+    document.getElementById("vol-down").addEventListener("click", function() {
+        changeVolume("down");
+    });
+
+    document.getElementById("prev").addEventListener("click", function() {
+        changeSong("prev");
+    });
+
+    document.getElementById("next").addEventListener("click", function() {
+        changeSong("next");
+    });
+
+    function togglePlay() {
+        if (isPlaying) {
+            musicPlayer.pause();
+        } else {
+            musicPlayer.play();
+        }
+        isPlaying = !isPlaying;
+    }
+
+    function changeVolume(direction) {
+        const currentVolume = musicPlayer.volume;
+        if (direction === "up") {
+            if (currentVolume < 1) {
+                musicPlayer.volume += 0.1;
+            }
+        } else if (direction === "down") {
+            if (currentVolume > 0) {
+                musicPlayer.volume -= 0.1;
+            }
+        }
+    }
+
+    function changeSong(direction) {
+        if (songs.length === 0) return;
+
+        if (direction === "prev") {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+        } else if (direction === "next") {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+        }
+
+        updateCurrentSong();
+    }
 
     updateCurrentSong();
 });

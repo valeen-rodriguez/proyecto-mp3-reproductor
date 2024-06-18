@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor MP3 | Hello Kitty</title>
+    <title>Hello Kitty MP3</title>
+    <link rel="shortcut icon" href="/image/logo-pagina.png" />
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="mp3-player">
-        <p id="toggle-button">Ver Canciones</p>
-        <div class="screen">
-            <!-- Aquí se reproducirá la imagen -->
-            <img id="song-image" src="/image/portada-mp3.png" alt="Portada de la canción">
+        <div class="screen" id="screen">
+            <h2 id="welcome-text">MP3 Hello Kitty</h2>
+            <div id="name-input-container">
+                <input type="text" id="name-input" placeholder="Ingresa tu nombre">
+                <button id="submit-name">Enviar</button>
+            </div>
         </div>
         <div class="controls">
             <div class="control-circle">
@@ -24,13 +27,17 @@
         </div>
     </div>
 
-    <div class="song-list-container" id="song-list-container">
-        <h3>Lista de Canciones</h3>
-        <ul class="song-list" id="song-list"></ul>
+    <div class="song-details" id="song-details" style="display: none;">
+        <h3 id="song-title"></h3>
+        <img id="song-image" src="" alt="Song Image">
     </div>
 
-    <audio id="music-player" controls style="display: none;">
-    </audio>
+    <div class="song-list-container" id="song-list-container">
+        <ul class="song-list" id="song-list"></ul>
+        <button id="back-to-list" style="display: none;">Volver Atrás</button>
+    </div>
+
+    <audio id="music-player" controls style="display: none;"></audio>
 
     <script src="js/script.js"></script>
 </body>
