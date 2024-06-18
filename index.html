@@ -12,17 +12,31 @@
         <div class="screen" id="screen">
             <h2 id="welcome-text">MP3 Hello Kitty</h2>
             <div id="name-input-container">
-                <input type="text" id="name-input" placeholder="Ingresa tu nombre">
+                <div class="floating-label">
+                    <input type="text" id="name-input" placeholder="Ingresa tu nombre" required>
+                    <label for="name-input">Ingresa tu nombre</label>
+                </div>
                 <button id="submit-name">Enviar</button>
-            </div>
+            </div>            
         </div>
         <div class="controls">
             <div class="control-circle">
-                <div class="control-button" id="prev">«</div>
-                <div class="control-button" id="next">»</div>
-                <div class="control-button" id="center">»〢</div>
-                <div class="control-button" id="vol-up">+</div>
-                <div class="control-button" id="vol-down">-</div>
+                <div class="control-button" id="prev">
+                    <img src="image/button/prev-button.png" class="button-img-prev">
+                </div>
+                <div class="control-button" id="next">
+                    <img src="image/button/next-button.png" class="button-img-next">
+                </div>
+                <div class="control-button" id="center">
+                    <img src="image/button/play-button.png" class="button-img-play-stop">
+                    <img src="image/button/stop-button.png" class="button-img-play-stop">
+                </div>
+                <div class="control-button" id="vol-up">
+                    <img src="image/button/vol-up-button.png" class="button-img-vol-up">
+                </div>
+                <div class="control-button" id="vol-down">
+                    <img src="image/button/minus-button.png" class="button-img-vol-down">
+                </div>
             </div>
         </div>
     </div>
