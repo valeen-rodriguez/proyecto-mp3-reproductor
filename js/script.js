@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const jsonUrl = '/json/songs.json';
+    const jsonUrl = 'json/songs.json';
     let songs = [];
 
     fetch(jsonUrl)
