@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Playwrite+FR+Moderne:wght@100..400&family=Playwrite+PL:wght@100..400&display=swap');
 
+*{
+    cursor: url('../image/cursor/normal-cursor.png'), auto;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -11,6 +15,17 @@ body {
     background-size: cover;
     font-family: "Playwrite FR Moderne", cursive;
     color: #ff69b4;
+    cursor: url('../image/cursor/normal-cursor.png'), auto;
+}
+
+input,
+label,
+select{
+    cursor: url('../image/cursor/text-cursor.png'), auto;
+}
+
+img{
+    cursor: url('../image/cursor/selected-cursor.png'), auto;
 }
 
 .mp3-player {
@@ -81,7 +96,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    cursor: url('../image/cursor/selected-cursor.png'), auto;
     color: #ff69b4;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, background-color 0.3s ease;
@@ -99,11 +114,12 @@ button {
     background-color: #ff69b4;
     color: #fff;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: url('../image/cursor/selected-cursor.png'), auto;
     transition: background-color 0.3s;
 }
 
 button:hover {
+    cursor: url('../image/cursor/selected-cursor.png'), auto;
     background-color: #ff1493;
 }
 
@@ -313,5 +329,5 @@ a {
     color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: url('../image/cursor/selected-cursor.png'), auto;
 }

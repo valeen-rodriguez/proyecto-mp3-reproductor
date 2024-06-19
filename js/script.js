@@ -110,8 +110,14 @@ document.addEventListener("DOMContentLoaded", function() {
             screen.innerHTML = "";
             screen.appendChild(songDetails);
 
+            // actualiza detalles de la canción sin reiniciar la reproducción si es la misma
+            const previousSongIndex = currentSongIndex;
             currentSongIndex = songs.findIndex(s => s.id === song.id);
-            updateCurrentSong();
+            if (previousSongIndex !== currentSongIndex) {
+                updateCurrentSong();
+            } else {
+                updateSongDetailsUI();
+            }
         }
 
         backButton.addEventListener("click", function() {
@@ -133,16 +139,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     songImage.src = currentSong.image; // actualiza la imagen (solo si estamos detalle de la cancion)
                 }
 
-                if (document.querySelector(".song-details")) {
-                    const titleElement = document.querySelector(".song-details h3");
-                    const imageElement = document.querySelector(".song-details img");
-
-                    if (titleElement && imageElement) {
-                        titleElement.textContent = currentSong.name;
-                        imageElement.src = currentSong.image;
-                        imageElement.alt = currentSong.name;
-                    }
-                }
+                updateSongDetailsUI();
 
                 // actualiza imagen de fondo
                 screen.style.backgroundImage = `url(${currentSong.image})`;
@@ -151,6 +148,20 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 musicPlayer.pause();
                 songTitle.textContent = "";
+            }
+        }
+
+        function updateSongDetailsUI() {
+            if (document.querySelector(".song-details")) {
+                const currentSong = songs[currentSongIndex];
+                const titleElement = document.querySelector(".song-details h3");
+                const imageElement = document.querySelector(".song-details img");
+
+                if (titleElement && imageElement) {
+                    titleElement.textContent = currentSong.name;
+                    imageElement.src = currentSong.image;
+                    imageElement.alt = currentSong.name;
+                }
             }
         }
 
